@@ -30,6 +30,7 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link" th:href="@{/home}">홈</a></li>
                 <li class="nav-item"><a class="nav-link active" th:href="@{/products}">상품 목록</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/user/password}">비밀번호 변경</a></li>
                 <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/products/add}">상품 등록</a>
                 </li>
@@ -45,6 +46,9 @@
 </nav>
 
 <div class="container">
+    <div th:if="${successMessage}" class="alert alert-success" role="alert"
+         th:text="${successMessage}"></div>
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="page-header">
             <h4 class="fw-bold mb-0">상품 목록</h4>
@@ -100,15 +104,18 @@
                                       th:text="${p.stock}"></span>
                                 <span th:if="${p.stock > 0 and p.stock <= 10}" class="badge badge-stock-low"
                                       th:text="${p.stock}"></span>
-                                <span th:if="${p.stock == 0}" class="badge badge-stock-out">품절</span>
+                                <span th:if="${p.stock == 0}" class="badge badge-st                  ock-out">품절</span>
                             </td>
                             <td class="text-center text-muted small"
                                 th:text="${#temporals.format(p.createdAt, 'yyyy-MM-dd')}"></td>
                             <td class="text-center" sec:authorize="hasRole('ADMIN')">
-                                <form th:action="@{/products/{id}/delete(id=${p.id})}" method="post"
-                                      onsubmit="return confirm('삭제하시겠습니까?')">
-                                    <button class="btn btn-outline-danger btn-sm">삭제</button>
-                                </form>
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a th:href="@{/products/{id}/edit(id=${p.id})}" class="btn btn-outline-primary btn-sm">수정</a>
+                                    <form th:action="@{/products/{id}/delete(id=${p.id})}" method="post"
+                                          onsubmit="return confirm('삭제하시겠습니까?')">
+                                        <button class="btn btn-outline-danger btn-sm">삭제</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -148,7 +155,7 @@
 
 <footer class="text-center text-muted small py-4" style="width:100%; text-align:center;">
     <p class="mb-0"
-       th:text="${'실습 수행: ' + #temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')} + ' | 학번: 2271289 | 이름: 최용주'"></p>
+       th:text="${'실습 수행 일시: ' + #temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')} + ' | 학번: 2271289 | 성명: 최용주'"></p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

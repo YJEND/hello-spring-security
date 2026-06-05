@@ -51,4 +51,14 @@ public class ProductService {
     public Page<Product> searchProducts(String keyword, Pageable pageable) {
         return productRepository.findByNameContaining(keyword, pageable);
     }
+
+    @Transactional
+    public Product updateProduct(Long id, ProductDto dto) {
+        Product product = findById(id);
+        product.setName(dto.getName());
+        product.setPrice(dto.getPrice());
+        product.setStock(dto.getStock());
+        product.setDescription(dto.getDescription());
+        return product;
+    }
 }
