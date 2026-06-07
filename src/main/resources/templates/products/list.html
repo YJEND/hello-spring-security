@@ -104,7 +104,7 @@
                                       th:text="${p.stock}"></span>
                                 <span th:if="${p.stock > 0 and p.stock <= 10}" class="badge badge-stock-low"
                                       th:text="${p.stock}"></span>
-                                <span th:if="${p.stock == 0}" class="badge badge-st                  ock-out">품절</span>
+                                <span th:if="${p.stock == 0}" class="badge badge-stock-out">품절</span>
                             </td>
                             <td class="text-center text-muted small"
                                 th:text="${#temporals.format(p.createdAt, 'yyyy-MM-dd')}"></td>
